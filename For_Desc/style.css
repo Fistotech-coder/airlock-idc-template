@@ -314,26 +314,29 @@ select:focus {
     border: none;
     border-radius: 50%;
     margin: 0;
-    background: #ebf0ed;
-    /* dark green */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    background: linear-gradient(135deg, #4A90FF 0%, #357AFF 100%);
+    box-shadow: 0 4px 20px rgba(74, 144, 255, 0.4);
     z-index: 1002;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.25s, box-shadow 0.25s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .share-btn:hover {
-    background: #074995;
-    /* lighter green on hover */
-    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35);
+    background: linear-gradient(135deg, #5BA4FF 0%, #468BFF 100%);
+    box-shadow: 0 8px 28px rgba(74, 144, 255, 0.6);
+    transform: translateY(-3px);
+}
+
+.share-btn:active {
+    transform: translateY(-1px);
 }
 
 .share-btn:focus {
-    outline: 2px solid #fff;
-    /* white outline */
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
 }
 
 .share-menu {
@@ -451,6 +454,9 @@ select:focus {
         min-width: 160px;
     }
 }
+
+
+
 
 
 /******************************************************************************** share button ends ****************************************************/
@@ -623,6 +629,7 @@ select:focus {
     border-radius: 6px;
     /* color: white; */
     background-color: #0E3E76;
+    padding-bottom: 1vw;
 }
 
 .toc-list1 .active p {
@@ -683,13 +690,13 @@ select:focus {
 .toc-floating1 {
     position: fixed;
     bottom: 6%;
-    /* left: 2%; */
-    /* transform: translate(-50%); */
+    left: 2%;
+    height: 80%;
+    /* Left corner positioning */
     /* min-width: 228px; */
-    width: 80%;
-    left: 10%;
-    /* transform: translateX(-50%); */
-
+    width: 15%;
+    min-width: 200px;
+    max-width: 250px;
     /* background: #fff; */
     padding: 23px 22px 17px 22px;
     border-radius: 18px;
@@ -702,7 +709,7 @@ select:focus {
     transition: opacity .32s cubic-bezier(.7, -0.26, .8, 1.42),
         transform .33s cubic-bezier(.7, -0.26, .8, 1.42);
     visibility: hidden;
-    max-height: 70vh;
+    max-height: 80% ;
     display: flex;
     flex-direction: column;
 
@@ -715,23 +722,26 @@ select:focus {
 
 .toc-list1 {
     width: 100%;
+    height: 100%;
     margin: 0;
     /* centers the element */
     padding: 0;
-
-    overflow-x: auto;
-    /* enable horizontal scroll */
-    overflow-y: hidden;
-    /* remove vertical scroll */
-
-    white-space: nowrap;
-    /* ensures items stay in one row */
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    overflow-x: hidden;
+    /* remove horizontal scroll */
+    overflow-y: auto;
+    /* enable vertical scroll */
+    max-height: 80vh;
+    white-space: normal;
+    /* allows wrapping */
 }
 
 /* Scrollbar for .toc-list1 */
 .toc-list1::-webkit-scrollbar {
-    height: 10px;
-    /* horizontal scrollbar height */
+    width: 8px;
+    /* vertical scrollbar width */
 }
 
 .toc-list1::-webkit-scrollbar-track {
@@ -803,17 +813,39 @@ select:focus {
 @keyframes modal-float {
     0% {
         opacity: 0;
-        transform: translateY(60px);
+        transform: translate(-50%, -45%);
+        scale: 0.9;
     }
 
     100% {
         opacity: 1;
-        transform: translateY(0);
+        transform: translate(-50%, -50%);
+        scale: 1;
     }
 }
 
 .animate-modal-float {
-    animation: modal-float 0.3s ease-out forwards;
+    animation: modal-float 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-10px); }
+    10% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-10px); }
+}
+
+.animate-fade-in-out {
+    animation: fadeInOut 2s ease-in-out forwards;
 }
 
 /* *************************share button navbar end************************** */
@@ -1502,3 +1534,376 @@ select:focus {
 
 
 /* page - 1 end  */
+
+
+
+@media screen and (min-width: 501px) and (max-width: 767px) {
+    #viewer{
+        margin-top: 1.5% !important;
+    }
+
+    .ui-arrow-next-page {
+        bottom: -9.5%;
+    top: unset;
+    right: 42%;
+    }
+
+    .ui-arrow-previous-page {
+        bottom: -9.5%;
+    top: unset;
+    left: 42%;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1100px) {
+    #viewer{
+        margin-top: 6% !important;
+    }
+
+    .ui-arrow-next-page {
+        bottom: -9.5%;
+    top: unset;
+    right: 42%;
+    }
+
+    .ui-arrow-previous-page {
+        bottom: -9.5%;
+    top: unset;
+    left: 42%;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+/* =============================================
+   MOBILE NAV BAR — visible only ≤1024px
+   ============================================= */
+@media screen and (max-width: 1024px) {
+  .mobile-nav-bar       { display: flex !important; }
+  .absolute.bottom-0    { display: none !important; }
+}
+
+.mobile-nav-bar {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 52px;
+  background: rgba(8, 20, 48, 0.97);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9200;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-top: 0.5px solid rgba(255,255,255,0.12);
+}
+
+/* Icon buttons (hamburger + dots) */
+.mob-icon-btn {
+  width: 38px; height: 38px;
+  background: rgba(255,255,255,0.1);
+  border: none; border-radius: 9px;
+  display: flex; align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-direction: column; gap: 3.5px;
+  transition: background 0.18s;
+  flex-shrink: 0;
+}
+.mob-icon-btn:active { background: rgba(255,255,255,0.22); }
+
+/* Hamburger lines */
+.mob-ham { display: flex; flex-direction: column; gap: 4px; }
+.mob-ham span {
+  display: block; width: 16px; height: 2px;
+  background: #fff; border-radius: 2px;
+  transition: transform 0.22s, opacity 0.18s;
+}
+/* Animated open state */
+.mob-icon-btn.open .mob-ham span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.mob-icon-btn.open .mob-ham span:nth-child(2) { opacity: 0; }
+.mob-icon-btn.open .mob-ham span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* Three dots */
+.mob-dots-btn { background: rgba(255,255,255,0.0); flex-direction: column; gap: 3px; }
+.mob-dots { display: flex; flex-direction: column; gap: 3.5px; align-items: center; }
+.mob-dots span {
+  display: block; width: 4px; height: 4px;
+  background: #fff; border-radius: 50%;
+}
+
+/* Page number center */
+.mob-page-label {
+  color: rgba(255,255,255,0.8);
+  font-size: 12px; font-weight: 400;
+  margin: 0; text-align: center;
+}
+.mob-page-label span { font-weight: 600; color: #fff; }
+
+/* ---- TOC popup ---- */
+.mob-toc-popup {
+  display: none;
+  position: fixed;
+  top: 70px; left: 8px;
+  width: 215px; max-height: 68vh;
+  background: #D3D6DB;
+  border-radius: 14px;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.36);
+  z-index: 9300;
+  flex-direction: column;
+  overflow: hidden;
+}
+.mob-toc-popup.show { display: flex; }
+
+.mob-toc-title {
+  font-size: 12.5px; font-weight: 600;
+  color: #000; text-align: center;
+  padding: 13px 14px 8px;
+  border-bottom: 0.5px solid rgba(0,0,0,0.12);
+  flex-shrink: 0;
+}
+
+.mob-toc-list {
+  list-style: none; margin: 0;
+  padding: 6px 0;
+  overflow-y: auto;
+}
+.mob-toc-list li { margin: 0; }
+.mob-toc-list a {
+  display: block; padding: 9px 16px;
+  font-size: 12.5px; color: #111;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+.mob-toc-list li:active a,
+.mob-toc-list li.mob-active a {
+  background: #0E3E76;
+  color: #fff;
+}
+
+/* ---- Dots popup ---- */
+.mob-dots-popup {
+  display: none;
+  position: fixed;
+  top: 70px; right: 8px;
+  width: 155px;
+  background: #D3D6DB;
+  border-radius: 14px;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.36);
+  z-index: 9300;
+  flex-direction: column;
+  padding: 8px 0;
+  overflow: hidden;
+}
+.mob-dots-popup.show { display: flex; }
+
+.mob-action-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 14px;
+  background: transparent; border: none;
+  cursor: pointer; width: 100%; text-align: left;
+  transition: background 0.15s;
+}
+.mob-action-row:active { background: rgba(0,0,0,0.08); }
+
+.mob-action-icon {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: #0e3e76;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.mob-action-svg { width: 15px; height: 15px; object-fit: contain; }
+
+.mob-action-label { font-size: 12.5px; font-weight: 500; color: #111; }
+
+/* ---- Overlay ---- */
+.mob-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.28); z-index: 9100;
+}
+.mob-overlay.show { display: block; }
+
+
+
+/* =========================
+   MOBILE & TABLET RESPONSIVE
+   SHARE POPUP UI
+========================= */
+
+@media (max-width: 1024px) {
+
+.mobile-download{
+    position: absolute;
+    top: 8% !important;
+    right: 1.5% !important;
+    width: 50% !important;
+}
+
+    /* Overlay */
+    #shareOverlay {
+        backdrop-filter: blur(6px);
+    }
+
+    /* Main Modal */
+    #shareModal {
+        width: 90vw !important;
+        max-width: 90vw !important;
+        top: 50% !important;
+        left: 96% !important;
+        transform: translate(-50%, -50%) !important;
+        border-radius: 22px;
+    }
+
+    /* Padding */
+    #shareModal .p-\[2\.5vw\] {
+        padding: 6vw !important;
+    }
+
+    /* Close Button */
+    #closeBtn {
+        top: 4vw !important;
+        right: 4vw !important;
+        font-size: 5vw !important;
+    }
+
+    /* Heading */
+    #shareModal h2 {
+        font-size: 5vw !important;
+        margin-bottom: 1.5vw !important;
+    }
+
+    /* Subtitle */
+    #shareModal p {
+        font-size: 3vw !important;
+    }
+
+    /* Social Grid */
+    #shareModal .grid {
+        gap: 3vw !important;
+    }
+
+    /* Social Buttons */
+    #shareModal .grid button {
+        height: 14vw !important;
+        border-radius: 16px !important;
+    }
+
+    /* Social Icons */
+    #shareModal .grid img {
+        width: 6vw !important;
+    }
+
+    /* Section Labels */
+    #shareModal .uppercase {
+        font-size: 2.8vw !important;
+        margin-bottom: 3vw !important;
+    }
+
+    /* Divider */
+    #shareModal .bg-gradient-to-r {
+        margin-bottom: 5vw !important;
+    }
+
+    /* Copy Area */
+    #shareModal .flex.gap-\[0\.8vw\] {
+        gap: 2vw !important;
+        flex-direction: column;
+    }
+
+    /* Input */
+    #shareInput {
+        width: 100%;
+        height: 12vw !important;
+        font-size: 3vw !important;
+        padding: 0 4vw !important;
+        border-radius: 14px !important;
+    }
+
+    /* Copy Button */
+    #copyBtn {
+        width: 100%;
+        height: 12vw !important;
+        font-size: 3.2vw !important;
+        border-radius: 14px !important;
+        gap: 2vw !important;
+    }
+
+    /* Copy Icon */
+    #copyBtn svg {
+        width: 4vw !important;
+        height: 4vw !important;
+    }
+
+    /* Copied Message */
+    #copiedMsg {
+        top: -10vw !important;
+        font-size: 2.8vw !important;
+        padding: 2vw 3vw !important;
+        border-radius: 10px !important;
+    }
+}
+
+
+/* =========================
+   MOBILE ONLY
+========================= */
+
+@media (max-width: 600px) {
+
+    #shareModal {
+        width: 94vw !important;
+        max-width: 94vw !important;
+        border-radius: 20px;
+    }
+
+    #shareModal .p-\[2\.5vw\] {
+        padding: 7vw !important;
+    }
+
+    #shareModal h2 {
+        font-size: 6vw !important;
+    }
+
+    #shareModal p {
+        font-size: 3.5vw !important;
+    }
+
+    #shareModal .grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 4vw !important;
+    }
+
+    #shareModal .grid button {
+        height: 16vw !important;
+    }
+
+    #shareModal .grid img {
+        width: 7vw !important;
+    }
+
+    #shareInput {
+        height: 13vw !important;
+        font-size: 3.5vw !important;
+    }
+
+    #copyBtn {
+        height: 13vw !important;
+        font-size: 3.5vw !important;
+    }
+
+    #copyBtn svg {
+        width: 5vw !important;
+        height: 5vw !important;
+    }
+
+    #copiedMsg {
+        font-size: 3vw !important;
+    }
+}

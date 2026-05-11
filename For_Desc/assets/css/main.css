@@ -381,8 +381,11 @@ body {
 
 #viewer {
     width: 100%;
-    height: calc(100%);
+    height: 95%; /* Leave 5% for the bottom toolbar bar */
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #miniatures {
