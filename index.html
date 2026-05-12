@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Airlock</title>
-    <link rel="icon" href="./Airlock-Logo.gif">
+    <link rel="icon" href="./logo.svg">
     <style>
         * {
             padding: 0;
@@ -21,8 +21,21 @@
                 overflow-x: hidden;
             }
 
+            #preloader img {
+              width: 500px !important;
+            }
+
         }
 
+
+           @media screen and (max-width: 992px) {
+            
+
+            #preloader img {
+              width: 300px !important;
+            }
+
+        }
 
         #content {
             width: 100%;
@@ -93,10 +106,10 @@
 </head>
 
 <body>
-  <div id="preloader" class="fixed inset-0 bg-white flex items-center justify-center z-999999999999"
+  <!-- <div id="preloader" class="fixed inset-0 bg-white flex items-center justify-center z-999999999999"
     style="opacity: 1;">
-    <img src="./global-assets/Airlock-Logo.gif" alt="Logo" class="w-20 h-20 animate-logo" style="background-color: white;">
-  </div>
+    <img src="./global-assets/Airlock-Logo.gif" alt="Logo" class="w-20 h-20 animate-logo" style="background-color: white; ">
+  </div> -->
     <div id="content"></div>
 </body>
 <script>

@@ -277,23 +277,26 @@
 
 <!-- ========== MOBILE NAV BAR (mobile/tablet only) ========== -->
 <div id="mobileNavBar" class="mobile-nav-bar">
-  <!-- Left: TOC icon -->
-  <button id="mobileTocBtn" class="mob-icon-btn" title="Table of Contents" aria-label="Table of Contents">
-    <span class="mob-ham"><span></span><span></span><span></span></span>
+
+  <!-- Left: hamburger TOC -->
+  <button id="mobileTocBtn" class="mob-icon-btn" aria-label="Table of Contents">
+    <span class="mob-ham">
+      <span></span><span></span><span></span>
+    </span>
   </button>
 
-  <!-- Center: Page number -->
-  <p class="mob-page-label">Page <span id="mob-page-no">1</span></p>
+  <!-- Center: page number -->
+  <p class="mob-page-label ">Page <span id="mob-page-no">1</span></p>
 
-  <!-- Right: 3 dots -->
-  <button id="mobileDotsBtn" class="mob-icon-btn" title="More options" aria-label="More options">
+  <!-- Right: three dots -->
+  <button id="mobileDotsBtn" class="mob-icon-btn mob-dots-btn" aria-label="More options">
     <span class="mob-dots"><span></span><span></span><span></span></span>
   </button>
 </div>
 
-<!-- Mobile TOC popup -->
+<!-- TOC popup -->
 <nav id="mobileTocPopup" class="mob-toc-popup" aria-label="Mobile Table of Contents">
-  <div class="mob-toc-title">Table of Contents</div>
+  <div class="mob-toc-title">Table of contents</div>
   <ul class="mob-toc-list">
     <li class="mob-tb-link" data-page="1"><a>➝ Home</a></li>
     <li class="mob-tb-link" data-page="2"><a>➝ About us</a></li>
@@ -308,7 +311,7 @@
   </ul>
 </nav>
 
-<!-- Mobile dots popup -->
+<!-- Dots popup -->
 <div id="mobileDotsPopup" class="mob-dots-popup">
   <button id="mobMusicBtn" class="mob-action-row">
     <span class="mob-action-icon">
@@ -331,13 +334,11 @@
   </button>
 </div>
 
-<!-- Mobile overlay (closes popups on outside click) -->
+
+
+<!-- Overlay -->
 <div id="mobOverlay" class="mob-overlay"></div>
 <!-- ========== END MOBILE NAV BAR ========== -->
-
-
-
-
 
       <!-- ***********************************************Bottom Functionality code******************************************************** -->
 
@@ -520,7 +521,7 @@
 
 
       <div id="downloadPopup"
-        class="hidden fixed top-[2%] right-[.8%] bg-gray-500 text-white px-4 py-3 rounded-lg shadow-lg z-[9999] w-[20vw] text-sm opacity-0 transition-opacity duration-300">
+        class="hidden mobile-download fixed top-[2%] right-[.8%] bg-gray-500 text-white px-4 py-3 rounded-lg shadow-lg z-[9999] w-[20vw] text-sm opacity-0 transition-opacity duration-300">
         Download started...
       </div>
 
@@ -1085,92 +1086,92 @@
 
 
   <script>
-    // =============================================
-// MOBILE NAV BAR — only active on mobile/tablet
-// =============================================
+   /* =============================================
+   MOBILE NAV BAR — only active on ≤1024px
+   ============================================= */
 (function () {
-  if (window.innerWidth > 1024) return; // desktop: skip entirely
+  if (window.innerWidth > 1024) return;
 
-  const mobileNavBar   = document.getElementById('mobileNavBar');
-  const mobileTocBtn   = document.getElementById('mobileTocBtn');
-  const mobileDotsBtn  = document.getElementById('mobileDotsBtn');
-  const mobileTocPopup = document.getElementById('mobileTocPopup');
-  const mobileDotsPopup= document.getElementById('mobileDotsPopup');
-  const mobOverlay     = document.getElementById('mobOverlay');
-  const mobPageNo      = document.getElementById('mob-page-no');
+  const mobileTocBtn    = document.getElementById('mobileTocBtn');
+  const mobileDotsBtn   = document.getElementById('mobileDotsBtn');
+  const mobileTocPopup  = document.getElementById('mobileTocPopup');
+  const mobileDotsPopup = document.getElementById('mobileDotsPopup');
+  const mobOverlay      = document.getElementById('mobOverlay');
+  const mobPageNo       = document.getElementById('mob-page-no');
 
-  function closeAllMobPopups() {
+  function closeAll() {
     mobileTocPopup.classList.remove('show');
     mobileDotsPopup.classList.remove('show');
     mobOverlay.classList.remove('show');
+    mobileTocBtn.classList.remove('open');
   }
 
-  // TOC toggle
+  /* Hamburger / TOC toggle */
   mobileTocBtn.addEventListener('click', function (e) {
     e.stopPropagation();
-    const isOpen = mobileTocPopup.classList.contains('show');
-    closeAllMobPopups();
-    if (!isOpen) {
+    const wasOpen = mobileTocPopup.classList.contains('show');
+    closeAll();
+    if (!wasOpen) {
       mobileTocPopup.classList.add('show');
       mobOverlay.classList.add('show');
+      mobileTocBtn.classList.add('open');   // animate to ✕
     }
   });
 
-  // Dots toggle
+  /* Dots toggle */
   mobileDotsBtn.addEventListener('click', function (e) {
     e.stopPropagation();
-    const isOpen = mobileDotsPopup.classList.contains('show');
-    closeAllMobPopups();
-    if (!isOpen) {
+    const wasOpen = mobileDotsPopup.classList.contains('show');
+    closeAll();
+    if (!wasOpen) {
       mobileDotsPopup.classList.add('show');
       mobOverlay.classList.add('show');
     }
   });
 
-  // Overlay click → close
-  mobOverlay.addEventListener('click', closeAllMobPopups);
-
-  // ESC key → close
+  mobOverlay.addEventListener('click', closeAll);
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeAllMobPopups();
+    if (e.key === 'Escape') closeAll();
   });
 
-  // TOC links → navigate flipbook
+  /* TOC links */
   document.querySelectorAll('.mob-tb-link').forEach(function (item) {
     item.addEventListener('click', function () {
       const page = parseInt(this.dataset.page);
-      if ($('#flipbook').turn) {
-        $('#flipbook').turn('page', page);
-      }
-      closeAllMobPopups();
+      if ($('#flipbook').turn) $('#flipbook').turn('page', page);
+      // highlight active
+      document.querySelectorAll('.mob-tb-link').forEach(li => li.classList.remove('mob-active'));
+      this.classList.add('mob-active');
+      closeAll();
     });
   });
 
-  // Music button → mirrors existing bgm logic
+  /* Music */
   const mobMusicBtn    = document.getElementById('mobMusicBtn');
   const mobMusicOnImg  = document.getElementById('mobMusicOnImg');
   const mobMusicOffImg = document.getElementById('mobMusicOffImg');
   const bgmAudio       = document.getElementById('bgmAudio');
+  const musicOnImg     = document.getElementById('musicOnImg');
+  const musicOffImg    = document.getElementById('musicOffImg');
 
   mobMusicBtn.addEventListener('click', function () {
     if (bgmAudio.paused) {
       bgmAudio.play();
       mobMusicOnImg.classList.remove('hidden');
       mobMusicOffImg.classList.add('hidden');
-      // sync desktop icons
-      document.getElementById('musicOnImg').classList.remove('hidden');
-      document.getElementById('musicOffImg').classList.add('hidden');
+      musicOnImg.classList.remove('hidden');
+      musicOffImg.classList.add('hidden');
     } else {
       bgmAudio.pause();
       mobMusicOnImg.classList.add('hidden');
       mobMusicOffImg.classList.remove('hidden');
-      document.getElementById('musicOnImg').classList.add('hidden');
-      document.getElementById('musicOffImg').classList.remove('hidden');
+      musicOnImg.classList.add('hidden');
+      musicOffImg.classList.remove('hidden');
     }
-    closeAllMobPopups();
+    closeAll();
   });
 
-  // Share button → reuse existing share modal
+  /* Share — reuses existing share modal */
   document.getElementById('mobShareBtn').addEventListener('click', function () {
     const shareModal   = document.getElementById('shareModal');
     const shareOverlay = document.getElementById('shareOverlay');
@@ -1178,12 +1179,12 @@
     if (shareModal && shareOverlay) {
       shareModal.classList.remove('hidden');
       shareOverlay.classList.remove('hidden');
-      try { shareInput.value = window.top.location.href; } catch(e) { shareInput.value = window.location.href; }
+      try { shareInput.value = window.top.location.href; } catch (e) { shareInput.value = window.location.href; }
     }
-    closeAllMobPopups();
+    closeAll();
   });
 
-  // Download button → reuse existing download logic
+  /* Download — reuses existing download logic */
   document.getElementById('mobDownloadBtn').addEventListener('click', function () {
     const downloadPopup = document.getElementById('downloadPopup');
     if (downloadPopup) {
@@ -1200,12 +1201,16 @@
     document.body.appendChild(link);
     link.click();
     link.remove();
-    closeAllMobPopups();
+    closeAll();
   });
 
-  // Sync page number with flipbook "turned" event
+  /* Sync page number */
   $('#flipbook').bind('turned', function (event, page) {
     if (mobPageNo) mobPageNo.textContent = page;
+    // sync active TOC highlight
+    document.querySelectorAll('.mob-tb-link').forEach(function (li) {
+      li.classList.toggle('mob-active', parseInt(li.dataset.page) === page);
+    });
   });
 
 })();

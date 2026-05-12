@@ -1907,3 +1907,24 @@ select:focus {
         font-size: 3vw !important;
     }
 }
+
+
+
+
+#locationBtn,
+a[href*="google.com/maps"] {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    cursor: pointer;
+    z-index: 9999;
+    
+}
+
+@media screen and (max-width: 1024px) {
+    .shadow-mobile{
+        left: -1% !important; 
+        transform: rotate(180deg);
+    }
+}
+
+
